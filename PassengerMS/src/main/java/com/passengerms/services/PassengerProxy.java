@@ -1,12 +1,13 @@
 package com.passengerms.services;
 
-import com.passengerms.domain.entities.PassengerEntity;
+import com.passengerms.domain.entities.Passenger;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 @Service
@@ -21,13 +22,13 @@ public class PassengerProxy implements PassengerService{
 
     @Override
     @CachePut(key = "#id")
-    public CompletableFuture<PassengerEntity> retrieve(Long id){
+    public CompletableFuture<List<Passenger>> retrieve(Long id){
         return service.retrieve(id);
     }
 
     @Override
     @Cacheable(key = "#id")
-    public CompletableFuture<PassengerEntity> consume(Long id){
+    public CompletableFuture<List<Passenger>> consume(Long id){
         return service.retrieve(id);
     }
 }
