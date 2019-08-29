@@ -2,6 +2,7 @@ package com.gateway.clients;
 
 import com.gateway.configs.RestConfig;
 import com.gateway.domain.Passenger;
+import com.gateway.domain.Reservation;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
@@ -17,8 +18,8 @@ public class PassengerMS{
         this.template = template;
     }
 
-    public Passenger create(Passenger passenger){
-        HttpEntity<Passenger> entity = new HttpEntity<>(passenger, RestConfig.getAcceptHeaders());
-        return template.exchange(config.buildUri(), HttpMethod.POST, entity, Passenger.class).getBody();
+    public Reservation create(Reservation reservation){
+        HttpEntity<Reservation> entity = new HttpEntity<>(reservation, RestConfig.getAcceptHeaders());
+        return template.exchange(config.buildUri(), HttpMethod.POST, entity, Reservation.class).getBody();
     }
 }
