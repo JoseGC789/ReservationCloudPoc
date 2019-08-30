@@ -4,7 +4,6 @@ import com.gateway.clients.ReservationServerMS;
 import com.gateway.domain.Reservation;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.concurrent.Future;
 
 @Service("async")
 public class AsyncOrchestrator implements Orchestrator{
@@ -24,8 +23,12 @@ public class AsyncOrchestrator implements Orchestrator{
     }
 
     @Override
-    public Future<Reservation> retrieve(Long id){
-        return null;
+    public Reservation retrieve(Long id){
+        Reservation.ReservationBuilder builder = Reservation.builder().id(id);
+        for(ReservationServerMS ms : reservationServerMS){
+            ms.read(builder, id);
+        }
+        return builder.build();
     }
 
 }
