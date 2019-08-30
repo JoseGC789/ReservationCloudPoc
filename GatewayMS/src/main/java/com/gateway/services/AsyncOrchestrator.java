@@ -16,8 +16,10 @@ public class AsyncOrchestrator implements Orchestrator{
 
     @Override
     public Reservation create(Reservation reservation){
-        Reservation.ReservationBuilder builder = Reservation.builder();
-        reservationServerMS.forEach(ms -> ms.create(builder, reservation));
+        Reservation.ReservationBuilder builder = Reservation.builder().id(reservation.getId());
+        for(ReservationServerMS ms : reservationServerMS){
+            ms.create(builder, reservation);
+        }
         return builder.build();
     }
 

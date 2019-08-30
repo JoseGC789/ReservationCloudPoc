@@ -40,7 +40,7 @@ public class PassengerMS extends AbstractMs<List<Passenger>>{
     }
 
     private <T> List<Passenger> extractAnswer(ResponseEntity<T> response, Supplier<List<Passenger>> action){
-        return response.getStatusCode() == HttpStatus.OK ? action.get() : Collections.emptyList();
+        return response.getStatusCode() != HttpStatus.NO_CONTENT ? action.get() : Collections.emptyList();
     }
 
     @Override
