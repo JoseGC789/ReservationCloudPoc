@@ -2,8 +2,6 @@ package com.passengerms.controllers;
 
 import com.passengerms.domain.dto.Reservation;
 import com.passengerms.domain.entities.Passenger;
-import com.passengerms.domain.vo.PassengerVO;
-import com.passengerms.repositories.PassengerRepository;
 import com.passengerms.services.PassengerService;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,9 +13,8 @@ import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -30,8 +27,6 @@ public class PassengerControllerTest{
     @InjectMocks
     private PassengerController controller;
     @Mock
-    private PassengerRepository repository;
-    @Mock
     private PassengerService service;
 
     private Reservation reservation;
@@ -39,7 +34,7 @@ public class PassengerControllerTest{
     private ControllerLinkBuilder link;
 
     @Before
-    public void setUp() throws ExecutionException, InterruptedException{
+    public void setUp() {
         Passenger passenger = Passenger.builder()
                 .id(ID)
                 .ageClass("ADT")
@@ -52,31 +47,28 @@ public class PassengerControllerTest{
     }
 
     @Test
-    public void testShouldCreateWithResource() throws ExecutionException, InterruptedException{
+    public void testShouldCreateWithResource() {
         Resource<Reservation> passengerResource = new Resource<>(reservation);
         passengerResource.add(link.withSelfRel());
-        when(repository.saveAll(any())).thenReturn(passengerList);
+        when(service.create(any())).thenReturn(passengerList);
         ResponseEntity<Resource<Reservation>> expected = ResponseEntity.created(link.toUri()).body(passengerResource);
         ResponseEntity<Resource<Reservation>> actual = controller.postPassenger(reservation);
         assertEquals("Should be " + expected.toString(), expected.toString(), actual.toString());
     }
 
     @Test
-    public void testShouldOkWithPassengerFound() throws ExecutionException, InterruptedException{
-        when(service.consume(any())).thenReturn(CompletableFuture.completedFuture(passengerList));
+    public void testShouldOkWithPassengerFound() {
+        when(service.read(any())).thenReturn(passengerList);
         ResponseEntity<List<Passenger>> expected = ResponseEntity.ok(passengerList);
         ResponseEntity<List<Passenger>> actual = controller.retrievePassenger(ID);
         assertEquals("Should be " + expected.toString(), expected.toString(), actual.toString());
     }
 
     @Test
-    public void testShouldAcceptWithResource() throws ExecutionException, InterruptedException{
-        CompletableFuture<List<Passenger>> promise = CompletableFuture.completedFuture(passengerList);
-        Resource<PassengerVO> passengerResource = new Resource<>(PassengerVO.of(promise));
-        passengerResource.add(link.withSelfRel());
-        when(service.retrieve(any())).thenReturn(promise);
-        ResponseEntity<Resource<PassengerVO>> expected = ResponseEntity.accepted().body(passengerResource);
-        ResponseEntity<Resource<PassengerVO>> actual = controller.acceptPassenger(ID);
+    public void testShouldNoContent() {
+        when(service.read(any())).thenReturn(Collections.emptyList());
+        ResponseEntity<List<Passenger>> expected = ResponseEntity.noContent().build();
+        ResponseEntity<List<Passenger>> actual = controller.retrievePassenger(ID);
         assertEquals("Should be " + expected.toString(), expected.toString(), actual.toString());
     }
 }
