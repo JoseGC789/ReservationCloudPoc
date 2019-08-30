@@ -3,11 +3,10 @@ package com.gateway.services;
 import com.gateway.domain.Reservation;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
-import java.util.concurrent.Future;
 
 @Service
 @Primary
@@ -26,14 +25,14 @@ public class OrchestratorProxy implements Orchestrator{
 
     @CachePut(key = "#id")
     @Override
-    public Future<Reservation> retrieve(Long id){
-        return null;
+    public Reservation retrieve(Long id){
+        return orchestrator.retrieve(id);
     }
 
-    @CacheEvict(key = "#id")
+    @Cacheable(key = "#id")
     @Override
-    public Future<Reservation> consume(Long id){
-        return null;
+    public Reservation consume(Long id){
+        return orchestrator.retrieve(id);
     }
 
 }
