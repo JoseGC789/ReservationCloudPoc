@@ -35,7 +35,7 @@ public class PassengerMS extends AbstractMs<List<Passenger>>{
     @Override
     protected List<Passenger> readFromService(Long id){
         HttpEntity<Long> entity = new HttpEntity<>(id, RestConfig.getAcceptHeaders());
-        ResponseEntity<List<Passenger>> response = template.exchange(config.buildUri(), HttpMethod.GET, entity, new ParameterizedTypeReference<List<Passenger>>(){});
+        ResponseEntity<List<Passenger>> response = template.exchange(config.buildUri() + id, HttpMethod.GET, entity, new ParameterizedTypeReference<List<Passenger>>(){});
         return extractAnswer(response, response::getBody);
     }
 
