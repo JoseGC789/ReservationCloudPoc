@@ -18,7 +18,8 @@ public class ApiController{
 
     @PostMapping
     public ResponseEntity<Reservation> aggregateResult(@RequestBody Reservation reservation){
-        Reservation bundle = passengerMS.create(reservation);
+        Reservation.ReservationBuilder builder = Reservation.builder();
+        Reservation bundle = passengerMS.create(builder, reservation).build();
         return ResponseEntity.ok(bundle);
     }
 }
