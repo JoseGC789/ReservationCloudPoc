@@ -10,7 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Builder
-public class Reservation{
+public class  Reservation{
     private Long id;
     private List<Passenger> passengers;
 }

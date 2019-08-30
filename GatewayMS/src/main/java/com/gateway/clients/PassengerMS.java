@@ -6,10 +6,14 @@ import com.gateway.domain.Reservation;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestOperations;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 @Service
 public class PassengerMS extends AbstractMs<List<Passenger>>{
@@ -24,13 +28,19 @@ public class PassengerMS extends AbstractMs<List<Passenger>>{
     @Override
     protected List<Passenger> postToService(Reservation reservation){
         HttpEntity<Reservation> entity = new HttpEntity<>(reservation, RestConfig.getAcceptHeaders());
-        return template.exchange(config.buildUri(), HttpMethod.POST, entity, new ParameterizedTypeReference<List<Passenger>>(){}).getBody();
+        ResponseEntity<Reservation> response = template.exchange(config.buildUri(), HttpMethod.POST, entity, Reservation.class);
+        return extractAnswer(response, () -> response.getBody().getPassengers());
     }
 
     @Override
     protected List<Passenger> readFromService(Long id){
         HttpEntity<Long> entity = new HttpEntity<>(id, RestConfig.getAcceptHeaders());
-        return template.exchange(config.buildUri(), HttpMethod.GET, entity, new ParameterizedTypeReference<List<Passenger>>(){}).getBody();
+        ResponseEntity<List<Passenger>> response = template.exchange(config.buildUri(), HttpMethod.GET, entity, new ParameterizedTypeReference<List<Passenger>>(){});
+        return extractAnswer(response, response::getBody);
+    }
+
+    private <T> List<Passenger> extractAnswer(ResponseEntity<T> response, Supplier<List<Passenger>> action){
+        return response.getStatusCode() == HttpStatus.OK ? action.get() : Collections.emptyList();
     }
 
     @Override
