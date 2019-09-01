@@ -3,9 +3,7 @@ package com.gateway.clients;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
 
-@Component
 @ConfigurationProperties(prefix = "discovery.ms.passenger")
 @Getter
 @Setter
