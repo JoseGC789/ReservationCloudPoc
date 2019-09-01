@@ -1,4 +1,4 @@
-package com.passengerms.domain.entities;
+package com.groupms.domain.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
@@ -20,8 +20,6 @@ public class Passenger{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonIgnore
     private Long id;
-    @JsonIgnore
-    private Long reservationId;
     private String firstName;
     private String lastName;
     private String ageClass;
