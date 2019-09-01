@@ -7,6 +7,8 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 @Service
 @Primary
@@ -19,19 +21,19 @@ public class OrchestratorProxy implements Orchestrator{
     }
 
     @Override
-    public Reservation create(Reservation reservation){
+    public Future<Reservation> create(Reservation reservation){
         return orchestrator.create(reservation);
     }
 
     @CachePut(key = "#id")
     @Override
-    public Reservation retrieve(Long id){
+    public Future<Reservation> retrieve(Long id) throws ExecutionException, InterruptedException{
         return orchestrator.retrieve(id);
     }
 
     @Cacheable(key = "#id")
     @Override
-    public Reservation consume(Long id){
+    public Future<Reservation> consume(Long id) throws ExecutionException, InterruptedException{
         return orchestrator.retrieve(id);
     }
 
