@@ -25,7 +25,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 public class PassengerControllerTest{
     private static final Long ID = 1L;
     @InjectMocks
-    private PassengerController controller;
+    private PassengerServlet controller;
     @Mock
     private PassengerService service;
 
@@ -43,7 +43,7 @@ public class PassengerControllerTest{
                 .build();
         passengerList = Arrays.asList(passenger, passenger);
         reservation = new Reservation(ID, passengerList);
-        link = linkTo(methodOn(PassengerController.class).retrievePassenger(passenger.getId()));
+        link = linkTo(methodOn(PassengerServlet.class).retrievePassenger(passenger.getId()));
     }
 
     @Test

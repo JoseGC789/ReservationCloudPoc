@@ -16,11 +16,11 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @RestController
-public class PassengerController{
+public class PassengerServlet{
 
     private final PassengerService service;
 
-    public PassengerController(PassengerService service){
+    public PassengerServlet(PassengerService service){
         this.service = service;
     }
 
@@ -35,7 +35,7 @@ public class PassengerController{
         reservation.getPassengers().forEach(passenger -> passenger.setReservationId(reservation.getId()));
         reservation.setPassengers(service.create(reservation.getPassengers()));
         Resource<Reservation> dbReservation = new Resource<>(reservation);
-        ControllerLinkBuilder link = linkTo(methodOn(PassengerController.class).retrievePassenger(reservation.getId()));
+        ControllerLinkBuilder link = linkTo(methodOn(PassengerServlet.class).retrievePassenger(reservation.getId()));
         dbReservation.add(link.withSelfRel());
         return ResponseEntity.created(link.toUri()).body(dbReservation);
     }

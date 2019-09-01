@@ -1,4 +1,4 @@
-package com.passengerms.repositories;
+package com.passengerms.persistence;
 
 import com.passengerms.domain.entities.Passenger;
 import org.springframework.data.jpa.repository.JpaRepository;
