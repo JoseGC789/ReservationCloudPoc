@@ -26,5 +26,6 @@ public class Passenger{
     private String lastName;
     private String ageClass;
     @JsonIgnore
+    @Builder.Default
     private Boolean flown = false;
 }
