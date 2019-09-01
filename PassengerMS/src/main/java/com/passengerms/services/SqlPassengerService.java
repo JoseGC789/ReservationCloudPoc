@@ -1,7 +1,7 @@
 package com.passengerms.services;
 
 import com.passengerms.domain.entities.Passenger;
-import com.passengerms.repositories.PassengerRepository;
+import com.passengerms.persistence.PassengerRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
 

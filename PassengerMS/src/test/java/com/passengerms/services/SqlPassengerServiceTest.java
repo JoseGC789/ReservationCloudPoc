@@ -1,7 +1,7 @@
 package com.passengerms.services;
 
 import com.passengerms.domain.entities.Passenger;
-import com.passengerms.repositories.PassengerRepository;
+import com.passengerms.persistence.PassengerRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
