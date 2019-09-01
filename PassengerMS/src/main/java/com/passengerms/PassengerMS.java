@@ -8,8 +8,8 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @SpringBootApplication
 @EnableAsync
 @EnableCaching
-public class Application{
+public class PassengerMS{
     public static void main(String[] args){
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(PassengerMS.class, args);
     }
 }
