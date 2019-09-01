@@ -1,14 +1,16 @@
 package com.gateway.services;
 
 import com.gateway.domain.Reservation;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 public interface Orchestrator{
 
-    Reservation create(Reservation reservation);
+    Future<Reservation> create(Reservation reservation);
 
-    Reservation retrieve(Long id);
+    Future<Reservation> retrieve(Long id) throws ExecutionException, InterruptedException;
 
-    default Reservation consume(Long id){
+    default Future<Reservation> consume(Long id) throws ExecutionException, InterruptedException{
         throw new UnsupportedOperationException();
     }
 }
