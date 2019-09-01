@@ -16,7 +16,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 @Service
-public class PassengerMS extends AbstractMs<List<Passenger>>{
+public class PassengerMS extends ReservationServlet<List<Passenger>>{
     private final PassengerMSConfig config;
     private final RestOperations template;
 
@@ -33,7 +33,7 @@ public class PassengerMS extends AbstractMs<List<Passenger>>{
     }
 
     @Override
-    protected List<Passenger> readFromService(Long id){
+    protected List<Passenger> getFromService(Long id){
         HttpEntity<Long> entity = new HttpEntity<>(id, RestConfig.getAcceptHeaders());
         ResponseEntity<List<Passenger>> response = template.exchange(config.buildUri() + id, HttpMethod.GET, entity, new ParameterizedTypeReference<List<Passenger>>(){});
         return extractAnswer(response, response::getBody);
