@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -12,6 +11,6 @@ import java.util.List;
 @Builder
 public class  Reservation{
     private Long id;
-    private List<Passenger> passengers;
+    private Group group;
     private Itinerary itinerary;
 }

@@ -26,10 +26,10 @@ spring:
 
 discovery:
   ms:
-    passenger:
+    group:
       dir: localhost
       port: 8081
-      context: /rest/passenger
+      context: /rest/group
     itinerary:
       dir: localhost
       port: 8082
