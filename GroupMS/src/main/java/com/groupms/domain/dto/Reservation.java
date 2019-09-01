@@ -1,11 +1,10 @@
-package com.passengerms.domain.dto;
+package com.groupms.domain.dto;
 
-import com.passengerms.domain.entities.Passenger;
+import com.groupms.domain.entities.Group;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.util.List;
 
 @Builder
 @Data
@@ -13,5 +12,5 @@ import java.util.List;
 @AllArgsConstructor
 public class Reservation{
     private Long id;
-    private List<Passenger> passengers;
+    private Group group;
 }
