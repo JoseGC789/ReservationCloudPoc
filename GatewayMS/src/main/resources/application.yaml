@@ -30,5 +30,9 @@ discovery:
       dir: localhost
       port: 8081
       context: /rest/passenger
+    itinerary:
+      dir: localhost
+      port: 8082
+      context: /rest/itinerary
 
 logging.level.org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG
