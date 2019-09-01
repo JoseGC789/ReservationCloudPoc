@@ -10,16 +10,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import java.util.concurrent.ExecutionException;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @RestController
-public class ApiController{
+public class GatewayServlet{
 
     private final Orchestrator orchestrator;
 
-    public ApiController(Orchestrator orchestrator){
+    public GatewayServlet(Orchestrator orchestrator){
         this.orchestrator = orchestrator;
     }
 
@@ -32,7 +31,7 @@ public class ApiController{
     public ResponseEntity<Resource<String>> aggregateResult(@PathVariable Long id){
         orchestrator.retrieve(id);
         Resource<String> resource = new Resource<>("SCHEDULED");
-        ControllerLinkBuilder link = linkTo(methodOn(ApiController.class).retrieveResult(id));
+        ControllerLinkBuilder link = linkTo(methodOn(GatewayServlet.class).retrieveResult(id));
         resource.add(link.withSelfRel());
         return ResponseEntity.accepted().body(resource);
     }
