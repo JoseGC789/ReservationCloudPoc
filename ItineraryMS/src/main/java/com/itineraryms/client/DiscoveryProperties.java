@@ -46,13 +46,15 @@ public class DiscoveryProperties{
     @Setter
     @ToString
     public static class SubscriptionHostName{
+        private static final String COLON = ":";
+        private static final String PREFIX = "http://";
         private String host;
         private String port;
         private String context;
         private String endpoint;
 
         private String buildUri(){
-            return String.join("", host, ":", port, context, endpoint);
+            return PREFIX + host + COLON + port + context + endpoint;
         }
 
     }
