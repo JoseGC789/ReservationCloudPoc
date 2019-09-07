@@ -25,5 +25,14 @@ spring:
     initialization-mode: always
   jackson.serialization.FAIL_ON_EMPTY_BEANS: false
 
+discovery:
+  hostname:
+    host: localhost
+    port: 5000
+    context: /rest/discovery
+    endpoint: /subscribe
+
+  payload:
+    tags: itinerary, passenger
 
 logging.level.org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG
