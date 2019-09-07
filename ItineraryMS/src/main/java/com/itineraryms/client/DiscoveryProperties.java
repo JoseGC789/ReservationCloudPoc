@@ -23,7 +23,7 @@ public class DiscoveryProperties{
     }
 
     public RegistrationPayload buildRegistration(String hostname){
-        return RegistrationPayload.from(payload.getTags(), hostname);
+        return RegistrationPayload.from(payload.getTags(), payload.getOthers(), hostname);
     }
 
     @Getter
@@ -31,12 +31,14 @@ public class DiscoveryProperties{
     @ToString
     public static class RegistrationPayload{
         private static final String KEY_TAG = "tags";
+        private static final String KEY_OTHERS = "others";
         private static final String KEY_HOST = "hostname";
         private final Map<String, Object> payload;
 
-        private static RegistrationPayload from(String[] tags, String hostname){
+        private static RegistrationPayload from(String[] tags, String[] others, String hostname){
             Map<String, Object> payload = new HashMap<>();
             payload.put(KEY_TAG, tags);
+            payload.put(KEY_OTHERS, others);
             payload.put(KEY_HOST, hostname);
             return new RegistrationPayload(Collections.unmodifiableMap(payload));
         }
@@ -64,5 +66,6 @@ public class DiscoveryProperties{
     @ToString
     public static class ItineraryRegistration{
         private String[] tags;
+        private String[] others;
     }
 }

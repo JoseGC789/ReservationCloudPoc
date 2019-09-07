@@ -33,6 +33,7 @@ discovery:
     endpoint: /subscribe
 
   payload:
-    tags: itinerary, passenger
+    tags: itinerary
+    others: PROCEED
 
 logging.level.org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG

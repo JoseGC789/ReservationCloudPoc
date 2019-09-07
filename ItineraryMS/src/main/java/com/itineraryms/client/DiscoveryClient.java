@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestOperations;
+import java.util.Map;
 
 @Service
 public class DiscoveryClient{
@@ -20,8 +21,8 @@ public class DiscoveryClient{
     }
 
     public HttpStatus subscribe(String serviceHostName){
-        HttpEntity<DiscoveryProperties.RegistrationPayload> entity = new HttpEntity<>(properties.buildRegistration(serviceHostName), RestConfig.getAcceptHeaders());
-        ResponseEntity<String> response = template.exchange(properties.buildUri(), HttpMethod.POST, entity, String.class);
+        HttpEntity<Map<String, Object>> entity = new HttpEntity<>(properties.buildRegistration(serviceHostName).getPayload(), RestConfig.getAcceptHeaders());
+        ResponseEntity response = template.exchange(properties.buildUri(), HttpMethod.POST, entity, String.class);
         return response.getStatusCode();
     }
 }
