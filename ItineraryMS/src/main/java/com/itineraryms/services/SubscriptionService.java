@@ -10,11 +10,11 @@ import java.net.InetAddress;
 
 @Service
 @Slf4j
-public class SubscriberService implements CommandLineRunner{
+public class SubscriptionService implements CommandLineRunner{
     private final Environment environment;
     private final DiscoveryClient client;
 
-    public SubscriberService(Environment environment, DiscoveryClient client){
+    public SubscriptionService(Environment environment, DiscoveryClient client){
         this.environment = environment;
         this.client = client;
     }
