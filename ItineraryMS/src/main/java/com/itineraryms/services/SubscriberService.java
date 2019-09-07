@@ -25,15 +25,17 @@ public class SubscriberService implements CommandLineRunner{
         String localHost = InetAddress.getLocalHost().getHostAddress();
         String port = environment.getProperty("server.port");
         String context = environment.getProperty("server.servlet.contextPath");
-        String uri = String.join("", localHost, ":", port, context);
+        String uri = localHost + ":" + port + context;
         try{
            status = client.subscribe(uri);
         }finally{
             if(HttpStatus.NO_CONTENT != status){
-                log.error("FAILED TO ESTABLISH CONNECTION WITH SERVICE DISCOVERY WITH: "
+                log.error("Failed to connect with Service Registry with uri: "
                         + uri
-                        + " RESPONDS WITH STATUS: "
+                        + " - Registry Response: "
                         + status);
+            }else {
+                log.warn("Connected to Service Registry!");
             }
         }
     }
