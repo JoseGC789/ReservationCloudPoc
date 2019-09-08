@@ -31,7 +31,7 @@ public class DiscoveryProperties{
     @ToString
     public static class RegistrationPayload{
         private static final String KEY_TAG = "tags";
-        private static final String KEY_OTHERS = "tags";
+        private static final String KEY_OTHERS = "others";
         private static final String KEY_HOST = "hostname";
         private final Map<String, Object> payload;
 
