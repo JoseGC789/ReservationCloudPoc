@@ -23,17 +23,19 @@ public class ItineraryServlet{
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Itinerary> retrieveItinerary(@PathVariable Long id) {
+    public ResponseEntity<Reservation> retrieveItinerary(@PathVariable Long id) {
+        Reservation reservation = new Reservation();
         Itinerary itinerary = service.read(id);
-        return itinerary.getSegments().isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(itinerary);
+        reservation.setItinerary(itinerary);
+        return itinerary.getSegments().isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(reservation);
     }
 
-    @PostMapping
-    public ResponseEntity<Resource<Reservation>> postItinerary(@RequestBody Reservation reservation) {
-        reservation.getItinerary().setItineraryId(reservation.getId());
+    @PostMapping("/{id}")
+    public ResponseEntity<Resource<Reservation>> postItinerary(@PathVariable Long id, @RequestBody Reservation reservation) {
+        reservation.getItinerary().setItineraryId(id);
         reservation.setItinerary(service.create(reservation.getItinerary()));
         Resource<Reservation> dbReservation = new Resource<>(reservation);
-        ControllerLinkBuilder link = linkTo(ControllerLinkBuilder.methodOn(ItineraryServlet.class).retrieveItinerary(reservation.getId()));
+        ControllerLinkBuilder link = linkTo(ControllerLinkBuilder.methodOn(ItineraryServlet.class).retrieveItinerary(id));
         dbReservation.add(link.withSelfRel());
         return ResponseEntity.created(link.toUri()).body(dbReservation);
     }
