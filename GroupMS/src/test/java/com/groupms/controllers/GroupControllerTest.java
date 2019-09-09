@@ -1,5 +1,6 @@
 package com.groupms.controllers;
 
+import com.groupms.domain.dtos.Reservation;
 import com.groupms.domain.entities.Group;
 import com.groupms.domain.entities.Passenger;
 import com.groupms.services.GroupService;
@@ -27,6 +28,7 @@ public class GroupControllerTest{
     @Mock
     private GroupService service;
 
+    private Reservation reservation;
     private Group group;
     private ControllerLinkBuilder link;
 
@@ -40,16 +42,18 @@ public class GroupControllerTest{
                 .build();
         String groupType = "Example";
         group = new Group(ID, groupType, Arrays.asList(passenger, passenger));
+        reservation = new Reservation();
+        reservation.setGroup(group);
         link = linkTo(methodOn(GroupServlet.class).retrieveGroup(group.getId()));
     }
 
     @Test
     public void testShouldCreateWithResource() {
-        Resource<Group> reservationResource = new Resource<>(group);
+        Resource<Reservation> reservationResource = new Resource<>(reservation);
         reservationResource.add(link.withSelfRel());
         when(service.create(any())).thenReturn(group);
-        ResponseEntity<Resource<Group>> expected = ResponseEntity.created(link.toUri()).body(reservationResource);
-        ResponseEntity<Resource<Group>> actual = controller.postGroup(ID, group);
+        ResponseEntity<Resource<Reservation>> expected = ResponseEntity.created(link.toUri()).body(reservationResource);
+        ResponseEntity<Resource<Reservation>> actual = controller.postGroup(ID, reservation);
         assertEquals("Should be " + expected.toString(), expected.toString(), actual.toString());
     }
 
