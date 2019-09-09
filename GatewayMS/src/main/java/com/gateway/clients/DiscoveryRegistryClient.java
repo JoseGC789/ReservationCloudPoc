@@ -4,11 +4,13 @@ import com.gateway.configs.RestConfig;
 import com.gateway.domain.DiscoveryPayload;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestOperations;
+import org.springframework.web.util.UriComponentsBuilder;
+import java.util.Collections;
 import java.util.Set;
+import static org.springframework.http.HttpMethod.GET;
 
 @Service
 public class DiscoveryRegistryClient implements DiscoveryRegistryMS{
@@ -22,9 +24,17 @@ public class DiscoveryRegistryClient implements DiscoveryRegistryMS{
     }
 
     @Override
-    public Set<DiscoveryPayload> retrieveServiceData(){
+    public Set<DiscoveryPayload> retrieveServiceData(Set<String> keySet){
         HttpEntity entity = new HttpEntity<>(null, RestConfig.getAcceptHeaders());
-        ResponseEntity<Set<DiscoveryPayload>> response = template.exchange(properties.buildUri(), HttpMethod.GET, entity, new ParameterizedTypeReference<Set<DiscoveryPayload>>(){});
+        String uriString = UriComponentsBuilder.fromHttpUrl(properties.buildUri())
+                .queryParam("tags", String.join(",", keySet))
+                .toUriString();
+        ResponseEntity<Set<DiscoveryPayload>> response = template.exchange(uriString, GET, entity, new ParameterizedTypeReference<Set<DiscoveryPayload>>(){});
         return response.getBody();
+    }
+
+    @Override
+    public Set<DiscoveryPayload> retrieveServiceData(){
+        return retrieveServiceData(Collections.emptySet());
     }
 }
