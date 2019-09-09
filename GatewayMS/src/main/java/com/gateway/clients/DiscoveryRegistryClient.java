@@ -2,6 +2,7 @@ package com.gateway.clients;
 
 import com.gateway.configs.RestConfig;
 import com.gateway.domain.DiscoveryPayload;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import java.util.Set;
 import static org.springframework.http.HttpMethod.GET;
 
 @Service
+@Slf4j
 public class DiscoveryRegistryClient implements DiscoveryRegistryMS{
 
     private final DiscoveryProperties properties;
@@ -27,7 +29,6 @@ public class DiscoveryRegistryClient implements DiscoveryRegistryMS{
     public Set<DiscoveryPayload> retrieveServiceData(Set<String> keySet){
         HttpEntity entity = new HttpEntity<>(null, RestConfig.getAcceptHeaders());
         String uriString = UriComponentsBuilder.fromHttpUrl(properties.buildUri())
-                .queryParam("tags", String.join(",", keySet))
                 .toUriString();
         ResponseEntity<Set<DiscoveryPayload>> response = template.exchange(uriString, GET, entity, new ParameterizedTypeReference<Set<DiscoveryPayload>>(){});
         return response.getBody();
