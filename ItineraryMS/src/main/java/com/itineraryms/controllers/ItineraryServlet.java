@@ -23,9 +23,11 @@ public class ItineraryServlet{
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Itinerary> retrieveItinerary(@PathVariable Long id) {
+    public ResponseEntity<Reservation> retrieveItinerary(@PathVariable Long id) {
+        Reservation reservation = new Reservation();
         Itinerary itinerary = service.read(id);
-        return itinerary.getSegments().isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(itinerary);
+        reservation.setItinerary(itinerary);
+        return itinerary.getSegments().isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(reservation);
     }
 
     @PostMapping("/{id}")
