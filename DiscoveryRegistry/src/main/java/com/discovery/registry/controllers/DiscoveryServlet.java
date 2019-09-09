@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RestController
@@ -35,14 +37,13 @@ public class DiscoveryServlet{
     }
 
     @GetMapping("/{tag}")
-    public ResponseEntity<Set<DiscoveryPayload>> asd(@PathVariable String tag){
+    public ResponseEntity<Set<DiscoveryPayload>> getOne(@PathVariable String tag){
         return ResponseEntity.ok(repository.findAllByTag(tag));
     }
 
     @GetMapping
-    public ResponseEntity<Set<DiscoveryPayload>> asd2(@RequestParam(name = "tags") List<String> tags){
-        log.warn(tags.toString());
-        return ResponseEntity.ok(repository.findAllInTags(tags));
+    public ResponseEntity<Set<DiscoveryPayload>> getAllByParam(@RequestParam(name = "tags", required = false) List<String> tags){
+        return tags == null ? ResponseEntity.ok(new HashSet<>(repository.findAll())) : ResponseEntity.ok(repository.findAllInTags(tags));
     }
 
 }
