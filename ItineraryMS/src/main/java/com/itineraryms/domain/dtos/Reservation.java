@@ -11,6 +11,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Reservation{
-    private Long id;
     private Itinerary itinerary;
 }
