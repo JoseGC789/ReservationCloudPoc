@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestOperations;
 import org.springframework.web.util.UriComponentsBuilder;
-import java.util.Map;
+import java.util.Collections;
 import java.util.Set;
 import static org.springframework.http.HttpMethod.GET;
 
@@ -24,12 +24,17 @@ public class DiscoveryRegistryClient implements DiscoveryRegistryMS{
     }
 
     @Override
-    public Set<DiscoveryPayload> retrieveServiceData(Map<String, Object> request){
+    public Set<DiscoveryPayload> retrieveServiceData(Set<String> keySet){
         HttpEntity entity = new HttpEntity<>(null, RestConfig.getAcceptHeaders());
         String uriString = UriComponentsBuilder.fromHttpUrl(properties.buildUri())
-                .queryParam("tags", String.join(",", request.keySet()))
+                .queryParam("tags", String.join(",", keySet))
                 .toUriString();
         ResponseEntity<Set<DiscoveryPayload>> response = template.exchange(uriString, GET, entity, new ParameterizedTypeReference<Set<DiscoveryPayload>>(){});
         return response.getBody();
+    }
+
+    @Override
+    public Set<DiscoveryPayload> retrieveServiceData(){
+        return retrieveServiceData(Collections.emptySet());
     }
 }
