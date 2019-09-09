@@ -1,6 +1,6 @@
 package com.groupms.controllers;
 
-import com.groupms.domain.dto.Reservation;
+import com.groupms.domain.dtos.Reservation;
 import com.groupms.domain.entities.Group;
 import com.groupms.services.GroupService;
 import org.springframework.hateoas.Resource;
@@ -24,17 +24,19 @@ public class GroupServlet{
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Group> retrieveGroup(@PathVariable Long id) {
+    public ResponseEntity<Reservation> retrieveGroup(@PathVariable Long id) {
+        Reservation reservation = new Reservation(service.read(id));
         Group group = service.read(id);
-        return group.getPassengers().isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(group);
+        reservation.setGroup(group);
+        return group.getPassengers().isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(reservation);
     }
 
-    @PostMapping
-    public ResponseEntity<Resource<Reservation>> postGroup(@RequestBody Reservation reservation) {
-        reservation.getGroup().setId(reservation.getId());
+    @PostMapping("/{id}")
+    public ResponseEntity<Resource<Reservation>> postGroup(@PathVariable Long id, @RequestBody Reservation reservation) {
+        reservation.getGroup().setId(id);
         reservation.setGroup(service.create(reservation.getGroup()));
         Resource<Reservation> dbReservation = new Resource<>(reservation);
-        ControllerLinkBuilder link = linkTo(methodOn(GroupServlet.class).retrieveGroup(reservation.getId()));
+        ControllerLinkBuilder link = linkTo(methodOn(GroupServlet.class).retrieveGroup(id));
         dbReservation.add(link.withSelfRel());
         return ResponseEntity.created(link.toUri()).body(dbReservation);
     }

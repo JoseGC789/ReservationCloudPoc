@@ -1,4 +1,4 @@
-package com.groupms.domain.dto;
+package com.groupms.domain.dtos;
 
 import com.groupms.domain.entities.Group;
 import lombok.AllArgsConstructor;
@@ -11,6 +11,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Reservation{
-    private Long id;
     private Group group;
 }

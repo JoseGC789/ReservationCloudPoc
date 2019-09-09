@@ -1,6 +1,6 @@
 package com.groupms.controllers;
 
-import com.groupms.domain.dto.Reservation;
+import com.groupms.domain.dtos.Reservation;
 import com.groupms.domain.entities.Group;
 import com.groupms.domain.entities.Passenger;
 import com.groupms.services.GroupService;
@@ -42,7 +42,8 @@ public class GroupControllerTest{
                 .build();
         String groupType = "Example";
         group = new Group(ID, groupType, Arrays.asList(passenger, passenger));
-        reservation = new Reservation(ID, group);
+        reservation = new Reservation();
+        reservation.setGroup(group);
         link = linkTo(methodOn(GroupServlet.class).retrieveGroup(group.getId()));
     }
 
@@ -52,23 +53,23 @@ public class GroupControllerTest{
         reservationResource.add(link.withSelfRel());
         when(service.create(any())).thenReturn(group);
         ResponseEntity<Resource<Reservation>> expected = ResponseEntity.created(link.toUri()).body(reservationResource);
-        ResponseEntity<Resource<Reservation>> actual = controller.postGroup(reservation);
+        ResponseEntity<Resource<Reservation>> actual = controller.postGroup(ID, reservation);
         assertEquals("Should be " + expected.toString(), expected.toString(), actual.toString());
     }
 
     @Test
     public void testShouldOkWithGroupFound() {
         when(service.read(any())).thenReturn(group);
-        ResponseEntity<Group> expected = ResponseEntity.ok(group);
-        ResponseEntity<Group> actual = controller.retrieveGroup(ID);
+        ResponseEntity<Reservation> expected = ResponseEntity.ok(reservation);
+        ResponseEntity<Reservation> actual = controller.retrieveGroup(ID);
         assertEquals("Should be " + expected.toString(), expected.toString(), actual.toString());
     }
 
     @Test
     public void testShouldNoContent() {
         when(service.read(any())).thenReturn(Group.empty());
-        ResponseEntity<Group> expected = ResponseEntity.noContent().build();
-        ResponseEntity<Group> actual = controller.retrieveGroup(ID);
+        ResponseEntity<Reservation> expected = ResponseEntity.noContent().build();
+        ResponseEntity<Reservation> actual = controller.retrieveGroup(ID);
         assertEquals("Should be " + expected.toString(), expected.toString(), actual.toString());
     }
 }
