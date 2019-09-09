@@ -1,6 +1,5 @@
 package com.groupms.controllers;
 
-import com.groupms.domain.dto.Reservation;
 import com.groupms.domain.entities.Group;
 import com.groupms.services.GroupService;
 import org.springframework.hateoas.Resource;
@@ -29,12 +28,12 @@ public class GroupServlet{
         return group.getPassengers().isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(group);
     }
 
-    @PostMapping
-    public ResponseEntity<Resource<Reservation>> postGroup(@RequestBody Reservation reservation) {
-        reservation.getGroup().setId(reservation.getId());
-        reservation.setGroup(service.create(reservation.getGroup()));
-        Resource<Reservation> dbReservation = new Resource<>(reservation);
-        ControllerLinkBuilder link = linkTo(methodOn(GroupServlet.class).retrieveGroup(reservation.getId()));
+    @PostMapping("/{id}")
+    public ResponseEntity<Resource<Group>> postGroup(@PathVariable Long id, @RequestBody Group group) {
+        group.setId(id);
+        group = service.create(group);
+        Resource<Group> dbReservation = new Resource<>(group);
+        ControllerLinkBuilder link = linkTo(methodOn(GroupServlet.class).retrieveGroup(id));
         dbReservation.add(link.withSelfRel());
         return ResponseEntity.created(link.toUri()).body(dbReservation);
     }
