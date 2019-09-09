@@ -60,16 +60,16 @@ public class GroupControllerTest{
     @Test
     public void testShouldOkWithGroupFound() {
         when(service.read(any())).thenReturn(group);
-        ResponseEntity<Group> expected = ResponseEntity.ok(group);
-        ResponseEntity<Group> actual = controller.retrieveGroup(ID);
+        ResponseEntity<Reservation> expected = ResponseEntity.ok(reservation);
+        ResponseEntity<Reservation> actual = controller.retrieveGroup(ID);
         assertEquals("Should be " + expected.toString(), expected.toString(), actual.toString());
     }
 
     @Test
     public void testShouldNoContent() {
         when(service.read(any())).thenReturn(Group.empty());
-        ResponseEntity<Group> expected = ResponseEntity.noContent().build();
-        ResponseEntity<Group> actual = controller.retrieveGroup(ID);
+        ResponseEntity<Reservation> expected = ResponseEntity.noContent().build();
+        ResponseEntity<Reservation> actual = controller.retrieveGroup(ID);
         assertEquals("Should be " + expected.toString(), expected.toString(), actual.toString());
     }
 }

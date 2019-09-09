@@ -24,9 +24,11 @@ public class GroupServlet{
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Group> retrieveGroup(@PathVariable Long id) {
+    public ResponseEntity<Reservation> retrieveGroup(@PathVariable Long id) {
+        Reservation reservation = new Reservation(service.read(id));
         Group group = service.read(id);
-        return group.getPassengers().isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(group);
+        reservation.setGroup(group);
+        return group.getPassengers().isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(reservation);
     }
 
     @PostMapping("/{id}")
