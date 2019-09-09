@@ -43,7 +43,7 @@ public class DiscoveryServlet{
 
     @GetMapping
     public ResponseEntity<Set<DiscoveryPayload>> getAllByParam(@RequestParam(name = "tags", required = false) List<String> tags){
-        return tags == null ? ResponseEntity.ok(new HashSet<>(repository.findAll())) : ResponseEntity.ok(repository.findAllInTags(tags));
+        return tags == null || tags.isEmpty() ? ResponseEntity.ok(new HashSet<>(repository.findAll())) : ResponseEntity.ok(repository.findAllInTags(tags));
     }
 
 }
