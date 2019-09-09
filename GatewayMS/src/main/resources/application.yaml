@@ -25,14 +25,9 @@ spring:
   jackson.serialization.FAIL_ON_EMPTY_BEANS: false
 
 discovery:
-  ms:
-    group:
-      dir: localhost
-      port: 8081
-      context: /rest/group
-    itinerary:
-      dir: localhost
-      port: 8082
-      context: /rest/itinerary
+  host: localhost
+  port: 5000
+  context: /rest/discovery
+  endpoint: /
 
 logging.level.org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG
