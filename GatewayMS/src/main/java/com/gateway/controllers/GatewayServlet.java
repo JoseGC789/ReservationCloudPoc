@@ -34,8 +34,8 @@ public class GatewayServlet{
     }
 
     @GetMapping("/test/test")
-    public ResponseEntity<Set<DiscoveryPayload>> asdasa(){
-        return ResponseEntity.ok(discoveryRegistryMS.retrieveServiceData());
+    public ResponseEntity<Set<DiscoveryPayload>> asdasa(@RequestBody Map<String, Object> request){
+        return ResponseEntity.ok(discoveryRegistryMS.retrieveServiceData(request));
     }
 
     @PostMapping("/{id}")

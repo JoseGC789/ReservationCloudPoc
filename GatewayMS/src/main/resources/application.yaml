@@ -28,6 +28,5 @@ discovery:
   host: localhost
   port: 5000
   context: /rest/discovery
-  endpoint: /
 
 logging.level.org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG

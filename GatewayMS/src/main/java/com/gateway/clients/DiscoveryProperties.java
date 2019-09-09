@@ -14,10 +14,9 @@ public class DiscoveryProperties{
     private String host;
     private String port;
     private String context;
-    private String endpoint;
 
     String buildUri(){
-        return PREFIX + host + COLON + port + context + endpoint;
+        return PREFIX + host + COLON + port + context;
     }
 
 }
