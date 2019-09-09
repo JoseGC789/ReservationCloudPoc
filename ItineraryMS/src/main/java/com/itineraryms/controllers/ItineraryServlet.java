@@ -1,6 +1,5 @@
 package com.itineraryms.controllers;
 
-import com.itineraryms.domain.dtos.Reservation;
 import com.itineraryms.domain.entities.Itinerary;
 import com.itineraryms.services.ItineraryService;
 import org.springframework.hateoas.Resource;
@@ -28,12 +27,12 @@ public class ItineraryServlet{
         return itinerary.getSegments().isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(itinerary);
     }
 
-    @PostMapping
-    public ResponseEntity<Resource<Reservation>> postItinerary(@RequestBody Reservation reservation) {
-        reservation.getItinerary().setItineraryId(reservation.getId());
-        reservation.setItinerary(service.create(reservation.getItinerary()));
-        Resource<Reservation> dbReservation = new Resource<>(reservation);
-        ControllerLinkBuilder link = linkTo(ControllerLinkBuilder.methodOn(ItineraryServlet.class).retrieveItinerary(reservation.getId()));
+    @PostMapping("/{id}")
+    public ResponseEntity<Resource<Itinerary>> postItinerary(@PathVariable Long id, @RequestBody Itinerary itinerary) {
+        itinerary.setItineraryId(id);
+        itinerary = service.create(itinerary);
+        Resource<Itinerary> dbReservation = new Resource<>(itinerary);
+        ControllerLinkBuilder link = linkTo(ControllerLinkBuilder.methodOn(ItineraryServlet.class).retrieveItinerary(id));
         dbReservation.add(link.withSelfRel());
         return ResponseEntity.created(link.toUri()).body(dbReservation);
     }
