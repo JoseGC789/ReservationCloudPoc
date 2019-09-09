@@ -4,18 +4,20 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@ConfigurationProperties(prefix = "discovery.ms.itinerary")
-@Getter
+@ConfigurationProperties("discovery")
 @Setter
-public class ItineraryMSConfig{
+@Getter
+public class DiscoveryProperties{
     private static final String COLON = ":";
     private static final String PREFIX = "http://";
     private static final String DASH = "/";
-    private String dir;
+    private String host;
     private String port;
     private String context;
+    private String endpoint;
 
     String buildUri(){
-        return PREFIX + dir + COLON + port + context + DASH;
+        return PREFIX + host + COLON + port + context + endpoint;
     }
+
 }

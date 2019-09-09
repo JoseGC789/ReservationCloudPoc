@@ -4,7 +4,7 @@ import com.gateway.domain.Reservation;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-public abstract class ReservationServlet<T> implements ReservationMS{
+public abstract class ElementsServletHandler<T> implements ElementsMS{
     @Override
     public final Reservation.ReservationBuilder create(Reservation.ReservationBuilder builder, Reservation reservation){
         return callService(builder, () -> postToService(reservation));

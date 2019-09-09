@@ -1,6 +1,6 @@
 package com.gateway.services;
 
-import com.gateway.clients.ReservationMS;
+import com.gateway.clients.ElementsMS;
 import com.gateway.domain.Reservation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
@@ -17,10 +17,10 @@ import java.util.function.Function;
 @Service("async")
 @Slf4j
 public class AsyncOrchestrator implements Orchestrator{
-    private final List<ReservationMS> reservationServerMS;
+    private final List<ElementsMS> reservationServerMS;
     private final ExecutorService executorService;
 
-    public AsyncOrchestrator(List<ReservationMS> reservationServerMS, ExecutorService executorService){
+    public AsyncOrchestrator(List<ElementsMS> reservationServerMS, ExecutorService executorService){
         this.reservationServerMS = reservationServerMS;
         this.executorService = executorService;
     }
@@ -42,10 +42,10 @@ public class AsyncOrchestrator implements Orchestrator{
         return CompletableFuture.completedFuture(builder.build());
     }
 
-    private <T> List<Future> orchestrateExecution(Function<ReservationMS, T> action){
+    private <T> List<Future> orchestrateExecution(Function<ElementsMS, T> action){
         log.warn("new AsyncOrchestrator call thread " + UUID.randomUUID());
         List<Future> futures = new ArrayList<>();
-        for(ReservationMS ms : reservationServerMS){
+        for(ElementsMS ms : reservationServerMS){
             log.warn("new ReservationMS call thread " + UUID.randomUUID());
             futures.add(executorService.submit(() -> action.apply(ms)));
         }
