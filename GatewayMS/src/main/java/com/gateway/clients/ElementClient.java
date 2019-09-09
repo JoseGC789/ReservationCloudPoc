@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestOperations;
 import org.springframework.web.util.UriComponentsBuilder;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
 
@@ -19,33 +20,31 @@ import static org.springframework.http.HttpMethod.POST;
 public class ElementClient extends ElementHandler{
     private final RestOperations operations;
 
-    public ElementClient(RestOperations operations){
+    public ElementClient(ExecutorService executorService, RestOperations operations){
+        super(executorService);
         this.operations = operations;
     }
 
     @Override
     protected Map<String, Object> postToService(Reservation reservation, DiscoveryPayload location){
-        log.error("aa");
         HttpEntity entity = new HttpEntity<>(reservation.getElements(), RestConfig.getAcceptHeaders());
-        log.error("aa");
-        String uriString = UriComponentsBuilder.fromPath(location.getHostname())
+        String uriString = UriComponentsBuilder.fromUriString("http://" + location.getHostname())
+                .path("/")
                 .path(reservation.getId().toString())
-                .toString();
-        log.error(uriString);
+                .toUriString();
         ResponseEntity<Map<String, Object>> response = operations.exchange(uriString, POST, entity, new ParameterizedTypeReference<Map<String, Object>>(){});
         return response.getBody();
     }
 
     @Override
     protected Map<String, Object> getFromService(Long id, DiscoveryPayload location){
-        log.error("aa");
         HttpEntity entity = new HttpEntity<>(id, RestConfig.getAcceptHeaders());
-        log.error("aa");
-        String uriString = UriComponentsBuilder.fromHttpUrl(location.getHostname())
+        String uriString = UriComponentsBuilder.fromUriString("http://" + location.getHostname())
+                .path("/")
                 .path(id.toString())
                 .toUriString();
-        log.error(uriString);
         ResponseEntity<Map<String, Object>> response = operations.exchange(uriString, GET, entity, new ParameterizedTypeReference<Map<String, Object>>(){});
+        log.error(response.getBody().toString());
         return response.getBody();
     }
 }

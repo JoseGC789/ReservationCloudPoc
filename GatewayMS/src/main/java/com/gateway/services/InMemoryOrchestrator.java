@@ -43,11 +43,18 @@ public class InMemoryOrchestrator implements Orchestrator{
         return executorService.submit(() -> getReservationFuture(id, locations));
     }
 
-    private Reservation getReservationFuture(Long id, Set<DiscoveryPayload> locations) throws InterruptedException, ExecutionException{
+    private Reservation getReservationFuture(Long id, Set<DiscoveryPayload> locations) throws ExecutionException, InterruptedException{
         Map<String, Object> elements = new HashMap<>();
         List<Future<Map<String, Object>>> read = ms.read(id, locations);
         for(Future<Map<String, Object>> future : read){
-            elements.putAll(future.get());
+            log.error(future.get().toString());
+            try{
+                elements.putAll(future.get());
+            }catch(Exception e){
+
+                log.error("mistak");
+            }finally{
+            }
         }
         return Reservation.builder().elements(elements).id(id).build();
     }
