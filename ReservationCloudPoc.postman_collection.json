@@ -1,0 +1,331 @@
+{
+	"info": {
+		"_postman_id": "1dbc53f6-cc1e-4127-91c5-84050297df9f",
+		"name": "ReservationCloudPoc",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "OrchestrateCreation",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"elements\":{\n\t\t\"group\":{\n\t\t\t\"type\":\"CORP\",\n\t\t\t\"passengers\":[\n\t\t\t\t{\n\t\t\t\t\t\"firstName\":\"11111111\",\n\t\t\t\t\t\"lastName\":\"aksstt\",\n\t\t\t\t\t\"ageClass\":\"ADT\"\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"firstName\":\"EXX\",\n\t\t\t\t\t\"lastName\":\"bbbb\",\n\t\t\t\t\t\"ageClass\":\"ADT\"\n\t\t\t\t}\n\t\t\t]\n\t\t},\n\t\t\"itinerary\":{\n\t\t\t\"segments\":[\n\t\t\t\t{\n\t\t\t\t\t\"flight\":{\n\t\t\t\t\t\t\"marketing\":\"BA\",\n\t\t\t\t\t\t\"operating\":\"LA\",\n\t\t\t\t\t\t\"number\":5000\n\t\t\t\t\t},\n\t\t\t\t\t\"portions\":[\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\"departureAirport\":\"LatamAirlines\",\n\t\t\t\t\t\t\t\"arrivalAirport\":\"aabbbbbaaa\",\n\t\t\t\t\t\t\t\"duration\":\"5 hours\"\n\t\t\t\t\t\t},\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\"departureAirport\":\"LatamAirlines\",\n\t\t\t\t\t\t\t\"arrivalAirport\":\"WamosAir\",\n\t\t\t\t\t\t\t\"duration\":\"5 hours\"\n\t\t\t\t\t\t}\n\t\t\t\t\t\t]\n\t\t\t\t}\n\t\t\t\t]\n\t\t}\n\t}\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/rest/api/151",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest",
+						"api",
+						"151"
+					]
+				},
+				"description": "localhost:8080/rest/api/"
+			},
+			"response": []
+		},
+		{
+			"name": "OrchestrateRefresh",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\":7,\n\t\"passengers\":[\n\t\t{\n\t\t\t\"firstName\":\"EXX\",\n\t\t\t\"lastName\":\"aksstt\",\n\t\t\t\"ageClass\":\"ADT\"\n\t\t},\n\t\t{\n\t\t\t\"firstName\":\"EXX\",\n\t\t\t\"lastName\":\"aksstt\",\n\t\t\t\"ageClass\":\"ADT\"\n\t\t}\n\t]\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/rest/api/151",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest",
+						"api",
+						"151"
+					]
+				},
+				"description": "localhost:8080/rest/api/2"
+			},
+			"response": []
+		},
+		{
+			"name": "OrchestrateRead",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "",
+						"type": "text",
+						"value": "",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8080/rest/api/151",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest",
+						"api",
+						"151"
+					]
+				},
+				"description": "localhost:8080/rest/api/2"
+			},
+			"response": []
+		},
+		{
+			"name": "CreateGroup",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\t\"type\":\"corp\",\n\t\t\"passengers\":[\n\t\t\t{\n\t\t\t\t\"firstName\":\"EXX\",\n\t\t\t\t\"lastName\":\"aksstt\",\n\t\t\t\t\"ageClass\":\"ADT\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"firstName\":\"EXX\",\n\t\t\t\t\"lastName\":\"aksstt\",\n\t\t\t\t\"ageClass\":\"ADT\"\n\t\t\t}\n\t\t]\n}"
+				},
+				"url": {
+					"raw": "localhost:8081/rest/group/6",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"rest",
+						"group",
+						"6"
+					]
+				},
+				"description": "localhost:8081/rest/passenger/3"
+			},
+			"response": []
+		},
+		{
+			"name": "ReadGroup",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8081/rest/group/6",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"rest",
+						"group",
+						"6"
+					]
+				},
+				"description": "localhost:8081/rest/passenger/7"
+			},
+			"response": []
+		},
+		{
+			"name": "CreateItinerary",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"itinerary\": {\n        \"segments\": [\n            {\n                \"flight\": {\n                    \"marketing\": \"BA\",\n                    \"operating\": \"LA\",\n                    \"number\": 5000\n                },\n                \"portions\": [\n                    {\n                        \"departureAirport\": \"LatamAirlines\",\n                        \"arrivalAirport\": \"aabbbbbaaa\",\n                        \"duration\": \"5 hours\"\n                    },\n                    {\n                        \"departureAirport\": \"LatamAirlines\",\n                        \"arrivalAirport\": \"WamosAir\",\n                        \"duration\": \"5 hours\"\n                    }\n                ]\n            }\n        ]\n    }\n}"
+				},
+				"url": {
+					"raw": "localhost:8082/rest/itinerary/3",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"rest",
+						"itinerary",
+						"3"
+					]
+				},
+				"description": "localhost:8082/rest/itinerary/"
+			},
+			"response": []
+		},
+		{
+			"name": "ReadItinerary",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8082/rest/itinerary/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"rest",
+						"itinerary",
+						"3"
+					]
+				},
+				"description": "http://localhost:8082/rest/itinerary/3"
+			},
+			"response": []
+		},
+		{
+			"name": "SubscribeToDiscovery",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"tags\":[\"asdss\", \"aaaaa\"],\n\t\"others\":[\"aaaa\",\"aaaac\",\"aaaab\"],\n\t\"hostname\":\"ejemplo.com\"\n}"
+				},
+				"url": {
+					"raw": "localhost:5000/rest/discovery/subscribe",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"rest",
+						"discovery",
+						"subscribe"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DiscoverSingleFromRegistry",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:5000/rest/discovery/asdss",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"rest",
+						"discovery",
+						"asdss"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DiscoverFromRegistry",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:5000/rest/discovery/?tags=itinerary",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"rest",
+						"discovery",
+						""
+					],
+					"query": [
+						{
+							"key": "tags",
+							"value": "itinerary"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
