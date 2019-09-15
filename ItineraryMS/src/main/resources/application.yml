@@ -5,7 +5,7 @@ server:
     contextPath: /rest/itinerary
 
 spring:
-
+  application.name: itinerary
   h2:
     console:
       enabled: true
@@ -24,16 +24,5 @@ spring:
     password:
     initialization-mode: always
   jackson.serialization.FAIL_ON_EMPTY_BEANS: false
-
-discovery:
-  hostname:
-    host: localhost
-    port: 5000
-    context: /rest/discovery
-    endpoint: /subscribe
-
-  payload:
-    tags: itinerary
-    others: PROCEED
 
 logging.level.org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG
