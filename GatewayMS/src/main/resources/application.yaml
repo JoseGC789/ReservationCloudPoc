@@ -5,6 +5,7 @@ server:
     contextPath: /rest/api
 
 spring:
+  application.name: gateway
   h2:
     console:
       enabled: true
@@ -23,10 +24,5 @@ spring:
     password:
     initialization-mode: always
   jackson.serialization.FAIL_ON_EMPTY_BEANS: false
-
-discovery:
-  host: localhost
-  port: 5000
-  context: /rest/discovery
 
 logging.level.org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG
