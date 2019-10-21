@@ -4,6 +4,6 @@ COPY pom.xml /home/app
 RUN mvn -f /home/app/pom.xml clean package
 
 FROM openjdk:8
-COPY --from=build /home/app/target/GatewayMS-1.0-SNAPSHOT.jar /usr/local/lib/GatewayMS-1.0-SNAPSHOT.jar
+COPY --from=build /home/app/target/ItineraryMS-1.0-SNAPSHOT.jar /usr/local/lib/ItineraryMS-1.0-SNAPSHOT.jar
 EXPOSE 8082
-ENTRYPOINT ["java","-jar","/usr/local/lib/GatewayMS-1.0-SNAPSHOT.jar"]
+ENTRYPOINT ["java","-jar","/usr/local/lib/ItineraryMS-1.0-SNAPSHOT.jar"]
