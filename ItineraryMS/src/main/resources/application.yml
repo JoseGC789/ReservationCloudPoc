@@ -26,3 +26,10 @@ spring:
   jackson.serialization.FAIL_ON_EMPTY_BEANS: false
 
 logging.level.org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG
+
+
+eureka:
+  instance:
+    home-page-url-path: ${server.servlet.contextPath}/
+  client:
+    should-enforce-registration-at-init: true
