@@ -1,7 +1,6 @@
 package com.gateway.services;
 
 import com.gateway.clients.ElementsMS;
-import com.gateway.domain.DiscoveryPayload;
 import com.gateway.domain.Reservation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheConfig;
@@ -12,8 +11,6 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
@@ -31,29 +28,24 @@ public class InMemoryOrchestrator implements Orchestrator{
     }
 
     @Override
-    public void create(Reservation reservation, Set<DiscoveryPayload> locations){
-        log.error("IN CREATE");
-        executorService.submit(() -> ms.create(reservation, locations));
+    public void create(Reservation reservation){
+        executorService.submit(() -> ms.create(reservation));
     }
 
     @CachePut(key = "#id")
     @Override
-    public Future<Reservation> retrieve(Long id, Set<DiscoveryPayload> locations){
-        log.error("IN RETRIEVE");
-        return executorService.submit(() -> getReservationFuture(id, locations));
+    public Future<Reservation> retrieve(Long id){
+        return executorService.submit(() -> getReservationFuture(id));
     }
 
-    private Reservation getReservationFuture(Long id, Set<DiscoveryPayload> locations) throws ExecutionException, InterruptedException{
+    private Reservation getReservationFuture(Long id) {
         Map<String, Object> elements = new HashMap<>();
-        List<Future<Map<String, Object>>> read = ms.read(id, locations);
+        List<Future<Map<String, Object>>> read = ms.read(id);
         for(Future<Map<String, Object>> future : read){
-            log.error(future.get().toString());
             try{
                 elements.putAll(future.get());
             }catch(Exception e){
-
-                log.error("mistak");
-            }finally{
+                log.error(e.getMessage());
             }
         }
         return Reservation.builder().elements(elements).id(id).build();
@@ -61,8 +53,8 @@ public class InMemoryOrchestrator implements Orchestrator{
 
     @Cacheable(key = "#id")
     @Override
-    public Future<Reservation> consume(Long id, Set<DiscoveryPayload> locations){
-        return retrieve(id, locations);
+    public Future<Reservation> consume(Long id){
+        return retrieve(id);
     }
 
 }

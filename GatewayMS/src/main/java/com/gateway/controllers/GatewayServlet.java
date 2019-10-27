@@ -2,7 +2,6 @@ package com.gateway.controllers;
 
 import com.gateway.domain.Reservation;
 import com.gateway.services.Orchestrator;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +16,6 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @RestController
-@Slf4j
 public class GatewayServlet{
 
     private final Orchestrator orchestrator;
@@ -29,7 +27,7 @@ public class GatewayServlet{
     @PostMapping("/{id}")
     public ResponseEntity<Resource<String>> create(@PathVariable Long id, @RequestBody Reservation reservation) throws ExecutionException, InterruptedException{
         reservation.setId(id);
-        orchestrator.create(reservation, null);
+        orchestrator.create(reservation);
         Resource<String> resource = new Resource<>("SCHEDULED CREATE");
         ControllerLinkBuilder link = linkTo(methodOn(GatewayServlet.class).retrieveResult(id));
         resource.add(link.withSelfRel());
@@ -38,7 +36,7 @@ public class GatewayServlet{
 
     @PutMapping("/{id}")
     public ResponseEntity<Resource<String>> aggregateResult(@PathVariable Long id) throws ExecutionException, InterruptedException{
-        orchestrator.retrieve(id, null);
+        orchestrator.retrieve(id);
         Resource<String> resource = new Resource<>("SCHEDULED REFRESH");
         ControllerLinkBuilder link = linkTo(methodOn(GatewayServlet.class).retrieveResult(id));
         resource.add(link.withSelfRel());
@@ -47,7 +45,7 @@ public class GatewayServlet{
 
     @GetMapping("/{id}")
     public ResponseEntity<Reservation> retrieveResult(@PathVariable Long id) throws ExecutionException, InterruptedException{
-        return ResponseEntity.ok(orchestrator.consume(id, null).get());
+        return ResponseEntity.ok(orchestrator.consume(id).get());
     }
 
 }
