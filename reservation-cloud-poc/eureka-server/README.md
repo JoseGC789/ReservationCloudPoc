@@ -1,0 +1,2 @@
+docker build -t eureka-server -f .\reservation-cloud-poc\eureka-server\docker\Dockerfile .             
+docker run --rm -it -p 8761:8761 --add-host localhost:172.17.0.2 eureka-server:latest eureka-server
