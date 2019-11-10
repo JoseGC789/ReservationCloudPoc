@@ -30,5 +30,3 @@ eureka:
   instance:
     home-page-url-path: ${server.servlet.contextPath}/
     prefer-ip-address: true
-  client:
-    should-enforce-registration-at-init: true

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import javax.validation.Valid;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
 @RestController
@@ -31,7 +32,7 @@ public class ItineraryServlet{
     }
 
     @PostMapping("/{id}")
-    public ResponseEntity<Resource<Reservation>> postItinerary(@PathVariable Long id, @RequestBody Reservation reservation) {
+    public ResponseEntity<Resource<Reservation>> postItinerary(@PathVariable Long id,@Valid @RequestBody Reservation reservation) {
         reservation.getItinerary().setItineraryId(id);
         reservation.setItinerary(service.create(reservation.getItinerary()));
         Resource<Reservation> dbReservation = new Resource<>(reservation);
